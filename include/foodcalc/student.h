@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef FC_STUDENT_H
+#define FC_STUDENT_H
+
 #include <foodcalc/fccore.h>
 
 namespace fc
@@ -17,13 +20,15 @@ namespace fc
 	class Student
 	{
 	private:
+		char	m_name[NameMaxLen]{0};
 		bool 	m_eaten[DaysInYear]{false};
 		int32_t	m_money[DaysInYear]{0};
-		char	m_name[NameMaxLen]{0};
 		
 	public:
 		explicit Student(const char* name, int32_t initial_balance = 0);
 		
+		bool operator==(const Student& s) const;
+
 		constexpr const char* get_name() const { return m_name; }	// имя ученика
 		constexpr const int32_t* get_money() const { return m_money; } // массив внесенных денег
 		constexpr const bool* get_eaten() const { return m_eaten; }	// массив статусов 'ел/не ел'
@@ -42,3 +47,5 @@ namespace fc
 		const int32_t eaten_count(const Date& date) const;	// возвращает количество дней когда ученик ел до указанной даты
 	};
 }
+
+#endif

@@ -1,4 +1,4 @@
-#include <foodcalc.h>
+#include <foodcalc/foodcalc.h>
 #include <iostream>
 #include <cstring>
 

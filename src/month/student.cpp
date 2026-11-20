@@ -1,5 +1,8 @@
 #include <foodcalc/student.h>
 
+#include <stdexcept>
+#include <exception>
+
 #include <cstring>
 #include <cstdlib>
 
@@ -20,6 +23,14 @@ Student::Student(const char* name, int32_t initial_balance)
 	m_money[0] = initial_balance;
 }
 
+bool Student::operator==(const Student& s) const
+{
+	if (strcmp(m_name, s.m_name) != 0) return false;
+	if (memcmp(m_eaten, s.m_eaten, sizeof(m_eaten)) != 0) return false;
+	if (memcmp(m_money, s.m_money, sizeof(m_money)) != 0) return false;
+	return true;
+}
+
 constexpr int32_t Student::get_balance() const
 {
 	int32_t res = 0;
@@ -32,7 +43,7 @@ constexpr int32_t Student::get_balance() const
 
 constexpr int32_t Student::get_balance(const Date& date) const
 {
-	if (!date.is_valid()) return md::cast<int32_t>(ErrCodes::Ptr);
+	if (!date.is_valid()) throw DateError("Неверное значение даты");
 	int32_t res = 0;
 	for (int i = 0; i < date.to_index(); ++i)
 	{
@@ -43,8 +54,8 @@ constexpr int32_t Student::get_balance(const Date& date) const
 
 constexpr int32_t Student::get_remainder(const Date& date, int32_t* prices) const
 {
-	if (!date.is_valid()) return md::cast<int32_t>(ErrCodes::Date);
-	if (prices == nullptr) return md::cast<int32_t>(ErrCodes::Ptr);
+	if (!date.is_valid()) throw DateError("Неверное значение даты");
+	if (prices == nullptr) throw std::invalid_argument("Ошибка получения массива цен");
 
 	int32_t balance = 0;
 	int32_t spent = 0;
@@ -93,3 +104,4 @@ constexpr bool Student::set_money(const Date& date, int32_t money)
 	if (!date.is_valid()) return false;
 	m_money[date.to_index()] = money;
 }
+
