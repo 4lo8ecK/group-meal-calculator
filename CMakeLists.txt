@@ -12,7 +12,8 @@ find_package(Qt5 5.15 REQUIRED COMPONENTS Core Gui Widgets)
 
 add_executable(FoodCalc src/main.cpp
     src/month/student.cpp
-    src/month/manager.cpp)
+    src/month/manager.cpp
+    src/month/flwork.cpp)
 
 target_link_libraries(FoodCalc PRIVATE Qt5::Core Qt5::Widgets)
 
