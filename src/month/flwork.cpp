@@ -1,8 +1,7 @@
-#include "flwork.h"
+#include <foodcalc/flwork.h>
 
 #include <stdexcept>
-
-
+#include <mdutils.h>
 
 namespace fc::path
 {
@@ -10,37 +9,41 @@ namespace fc::path
 	// на windows должен возвращать путь к AppData/Local
 	
 #if defined(__linux__)
-	const char* get_usr_home()
+	std::string get_usr_home()
 	{
+	#ifdef NDEBUG
 		const char* home = std::getenv("HOME");
+	#else
+		const char* home = "./";
+	#endif
+		md::LOG("homedir = %s\n", home);
 		if (*home != '\0' && home != nullptr) { return home; }
 		throw std::runtime_error("Не удалось получить путь к HOME");
-	}
 #elif defined(_WIN32)
-	const char* get_usr_home()
-	{
+
 		// TODO: НАПИСАТЬ РЕАЛИЗАЦИЮ ПОД WINDOWS!!!
-	}
 #endif
+	}
 
 	// Возвращает путь к директории приложения
 	// на unix "/home/<username>/.4lo8eck/FoodCalc/"
 	// на windows "С:users/<username>/Appdata/Local/4lo8ecK/FoodCalc/"	
-	const char* get_app_dir()
+	std::string get_app_dir()
 	{
-		fs::path res = fs::path(get_usr_home()) / developer_name / app_name;
-		return res.c_str();
+		std::string res = get_usr_home() + "/" + developer_name + "/" + app_name;
+		// sprintf(res.data(), "%s/%s/%s", get_usr_home(), developer_name, app_name);
+		md::LOG("app_dir = %s\n", res.c_str());
+		return res;
 	}
 
-
-	static void mkdir(const char* path)
+	void mkdir(const std::string& path)
 	{
 		if (!fs::exists(path) && !fs::is_directory(path))
 		{
 			fs::create_directories(path);
+			md::LOG("Создана директория %s\n", path.c_str());
 		}
 	}
-
 
 	// для списка групп учеников
 	std::vector<fs::path> get_directories_list(const std::string& path)

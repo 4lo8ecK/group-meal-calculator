@@ -55,6 +55,7 @@ namespace fc
 			{
 				return md::cast<int32_t>(month) * DaysInMonth + day;
 			}
+			return -1;
 		}
 	};
 }

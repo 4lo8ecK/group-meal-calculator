@@ -4,13 +4,20 @@
 #define FC_MANAGER_H
 
 #include <vector>
-#include <algorithm>
-#include <cstdlib>
+#include <cstring>
 
 #include <foodcalc/student.h>
 
+#include <mdutils.h>
+
 namespace fc
 {
+	struct load_file_t {explicit load_file_t() = default; };
+	inline constexpr load_file_t load_file{};
+	
+	struct by_name_t {explicit by_name_t() = default; };
+	inline constexpr by_name_t by_name{};
+
 	// Группа управляет классом
 	// Он хранит данные в директории класса 
 	// назвние хранит сам класс и годы учебного года
@@ -18,18 +25,18 @@ namespace fc
 	class StudentsGroup
 	{
 	private:
-		char group_name[16];
+		char group_name[32];
 		std::vector<Student*> students;
-
 		
 	public:
-		StudentsGroup(uint8_t _Grade, uint8_t _Year, tchar _Literal = 0)
+		StudentsGroup(const std::string& name, by_name_t)
 		{
-			if (_Literal != 0) { sprintf(group_name, "%d%s-%d", _Grade, _Year, _Literal); }
-			else { sprintf(group_name, "%d-%d", _Grade, _Year); }
+			strncat(group_name, name.c_str(), name.size());
+			md::LOG("group name = %s\n", group_name);
 		}
-		StudentsGroup(const char* path_to_dir);
-		
+		StudentsGroup(const char* path_to_dir, load_file_t);
+		~StudentsGroup();
+
 		int32_t find_index(const char* name) const;
 		bool contains(const char* name) const;
 
@@ -40,6 +47,9 @@ namespace fc
 
 		void save_data() const;
 		bool load_data();
+
+		const std::vector<Student*>& get_students() const { return students; }
+
 	};
 }
 	

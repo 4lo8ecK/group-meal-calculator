@@ -20,16 +20,18 @@ namespace fc::path
 
 	// На unix возвращает путь к домашней директории пользователя
 	// на windows должен возвращать путь к AppData/Local
-	const char* get_usr_home();
+	std::string get_usr_home();
 	
 	// Возвращает путь к директории приложения
 	// на unix "/home/<username>/.4lo8eck/FoodCalc/"
 	// на windows "С:users/<username>/Appdata/Local/4lo8ecK/FoodCalc/"	
-	const char* get_app_dir();
+	std::string get_app_dir();
 
 	// для списка групп учеников
 	std::vector<fs::path> get_directories_list(const std::string& path);
 	// для списка учеников одной из групп
 	std::vector<fs::path> get_files_list(const std::string& path);
+
+	void mkdir(const std::string& path);
 }
 #endif

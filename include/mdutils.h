@@ -21,4 +21,6 @@ inline constexpr target_t ccast(source_t&& val)
 	return const_cast<target_t>(val);
 }
 
+void LOG(const char* format, ...);
+
 }

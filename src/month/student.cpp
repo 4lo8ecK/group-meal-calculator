@@ -1,7 +1,6 @@
 #include <foodcalc/student.h>
 
 #include <stdexcept>
-#include <exception>
 
 #include <cstring>
 #include <cstdlib>
@@ -97,11 +96,13 @@ constexpr bool Student::set_eaten(const Date& date, bool state)
 {
 	if (!date.is_valid()) return false;
 	m_eaten[date.to_index()] = state;
+	return true;
 }
 
 constexpr bool Student::set_money(const Date& date, int32_t money)
 {
 	if (!date.is_valid()) return false;
 	m_money[date.to_index()] = money;
+	return true;
 }
 

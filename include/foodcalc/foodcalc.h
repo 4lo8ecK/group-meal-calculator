@@ -2,4 +2,5 @@
 
 #include <foodcalc/fccore.h>
 #include <foodcalc/student.h>
+#include <foodcalc/flwork.h>
 #include <foodcalc/manager.h>

@@ -25,6 +25,7 @@ namespace fc
 		int32_t	m_money[DaysInYear]{0};
 		
 	public:
+		Student() = default;
 		explicit Student(const char* name, int32_t initial_balance = 0);
 		
 		bool operator==(const Student& s) const;
