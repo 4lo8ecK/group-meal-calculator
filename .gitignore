@@ -1,0 +1,15 @@
+*
+!*/
+
+!*.sh
+
+!*.cpp
+!*.hpp
+!*.h
+!*.c
+
+!CMakeLists.txt
+
+!.git*
+
+build/
