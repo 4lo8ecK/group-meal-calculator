@@ -3,7 +3,7 @@
 #include <cstdio>
 #include <cstdarg>
 
-
+#ifndef NDEBUG
 void md::LOG(const char* format, ...)
 {
 	va_list args;
@@ -11,3 +11,6 @@ void md::LOG(const char* format, ...)
 	vfprintf(stdout, format, args);
 	va_end(args);
 }
+#else
+void md::LOG(const char*, ...) { return; }
+#endif

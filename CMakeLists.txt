@@ -17,8 +17,7 @@ message(STATUS "Компилятор - ${CMAKE_CXX_COMPILER}")
 find_package(Qt5 5.15 REQUIRED COMPONENTS Core Gui Widgets)
 
 add_executable(FoodCalc 
-	tests/manager.cpp
-	# src/main.cpp
+	src/main.cpp
     src/month/student.cpp
     src/month/manager.cpp
     src/month/flwork.cpp
